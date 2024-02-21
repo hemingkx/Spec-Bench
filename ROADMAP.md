@@ -7,3 +7,7 @@
 
 ## Integration
 - [ ] [vllm](https://github.com/vllm-project/vllm)
+
+## Applications
+
+- [ ] Gradio interface
