@@ -39,8 +39,9 @@ pip install -r requirements.txt
 Download corresponding model weights (if required) and modify the checkpoint path in `eval.sh`.
 
 - [vicuna-v1.3](https://huggingface.co/lmsys/vicuna-7b-v1.3)
-- [Medusa-1](https://github.com/FasterDecoding/Medusa?tab=readme-ov-file#medusa-1)
 - [EAGLE](https://github.com/SafeAILab/EAGLE?tab=readme-ov-file#eagle-weights)
+- [Medusa-1](https://github.com/FasterDecoding/Medusa?tab=readme-ov-file#medusa-1)
+- [Speculative Sampling](https://github.com/NJUNLP/MCSD?tab=readme-ov-file#model-release)
 
 ## Additonal Setup
 
