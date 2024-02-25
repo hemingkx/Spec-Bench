@@ -4,11 +4,13 @@ We present the evaluation results on our own devices for reference. All models w
 
 > ❗️It is important to note that model speedup rates may differ across various devices. For more precise speedup metrics, we recommend conducting evaluations of specific models on your intended devices.
 
+> 🤔 This is a gentle reminder that while speedup is the primary metric for assessing Speculative Decoding methods, other benefits are worth considering. For example, [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) and [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) require no extra parameters, making it simpler to integrate a wider range of models.
+
 ## Leaderboard on 3090
 
 - Device: a single NVIDIA GeForce RTX 3090 GPU (24GB) of 12 CPU cores
 - Testing environment: Pytorch 2.0.1, under CUDA 11.8
-- Experimantal Settings: Vicuna-7B-v1.3, greedy decoding, FP16 precision
+- Experimantal Settings: Vicuna-7B-v1.3, greedy decoding, FP16 precision, batch size = 1
 
 | Models                                                       | Multi-turn Conversation | Translation | Summarization | Question Answering | Mathematical Reasoning | Retrieval-aug. Generation |  Overall  |
 | ------------------------------------------------------------ | :---------------------: | :---------: | :-----------: | :----------------: | :--------------------: | :-----------------------: | :-------: |
@@ -23,7 +25,7 @@ We present the evaluation results on our own devices for reference. All models w
 
 - Device: a single NVIDIA A100 GPU (80GB) of 64 CPU cores 
 - Testing environment: Pytorch 2.0.1, under CUDA 11.4
-- Experimantal Settings: greedy decoding, FP16 precision
+- Experimantal Settings: greedy decoding, FP16 precision, batch size = 1
 
 ### Vicuna-7B-v1.3
 
