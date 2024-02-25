@@ -1,10 +1,10 @@
 <div align="center">
   <h2><img src="assets/logo.png" height="28px"/><i>Spec-Bench:</i><br>A Comprehensive Benchmark for Speculative Decoding</h2> 
 </div>
-
 <p align="center">
-| <a href="https://arxiv.org/abs/2401.07851"><b>Paper</b></a> | <a href="ROADMAP.md"><b>Roadmap</b></a> |
+| <a href="https://arxiv.org/abs/2401.07851"><b>Paper</b></a> | <a href="https://github.com/hemingkx/Spec-Bench/blob/main/Leaderboard.md"><b>Leaderboard</b></a> | <a href="ROADMAP.md"><b>Roadmap</b></a> |
 </p>
+
 
 ![timeline](./assets/spec_bench_7B.png)
 
