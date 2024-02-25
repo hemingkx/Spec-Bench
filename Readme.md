@@ -1,9 +1,11 @@
 <div align="center">
-  <h2><img src="assets/logo.png" height="28px"/><i>Spec-Bench:</i><br>A Comprehensive Benchmark for Speculative Decoding</h2> 
+  <h2><img src="assets/logo.png" height="28px"/><i>Spec-Bench:</i>A Comprehensive Benchmark and Unified<br>Evaluation Platform for Speculative Decoding</h2> 
 </div>
 <p align="center">
-| <a href="https://arxiv.org/abs/2401.07851"><b>Paper</b></a> | <a href="https://github.com/hemingkx/Spec-Bench/blob/main/Leaderboard.md"><b>Leaderboard</b></a> | <a href="ROADMAP.md"><b>Roadmap</b></a> |
+| <a href="https://arxiv.org/abs/2401.07851"><b>Paper</b></a> | <a href="https://sites.google.com/view/spec-bench/"><b>Blog</b></a> | <a href="https://github.com/hemingkx/Spec-Bench/blob/main/Leaderboard.md"><b>Leaderboard</b></a> | <a href="ROADMAP.md"><b>Roadmap</b></a> |
 </p>
+
+
 
 
 ![timeline](./assets/spec_bench_7B.png)
@@ -14,7 +16,7 @@
 
 ## Introduction
 
-Spec-Bench is a comprehensive benchmark designed for assessing Speculative Decoding methods across diverse scenarios. This repository contains the dataset and all scripts to conduct evaluations on Spec-Bench, facilitating the assessment of forefront Speculative Decoding methods ***in the same device and testing environment***.
+Spec-Bench is a comprehensive benchmark designed for assessing Speculative Decoding methods across diverse scenarios. Based on Spec-Bench, we aim to establish and maintain a unified evaluation platform for open-source Speculative Decoding approaches. This platform facilitates the systematic assessment of existing methods ***in the same device and testing environment***, thereby ensuring fair comparisons. 
 
 Currently, Spec-Bench supports the evaluation of the following open source models:
 
@@ -91,9 +93,9 @@ python evaluation/equal.py --file-path /your_own_path/model_answer/ --jsonfile1 
 
 We warmly welcome contributions and discussions related to Spec-Bench! If you have any suggestions for improvements or ideas you'd like to discuss, please don't hesitate to open an issue. This will allow us to collaborate and discuss your ideas in detail.
 
-Additionally, if you're aware of any open-source Speculative Decoding methods not currently included in Spec-Bench, we encourage you to contribute by submitting a pull request. This helps ensure Spec-Bench remains a comprehensive and fair benchmarking platform for comparing existing methods. Please ensure that your changes are well-tested before submission.
+***More models are welcome!*** - If you're aware of any open-source Speculative Decoding methods not currently included in Spec-Bench, we encourage you to contribute by submitting a pull request. This helps ensure Spec-Bench remains a comprehensive and fair benchmarking platform for comparing existing methods. Please ensure that your changes are well-tested before submission.
 
-## Acknowledgements
+## Acknowledgments
 
 This codebase is built from [Medusa](https://github.com/FasterDecoding/Medusa) and [EAGLE](https://github.com/SafeAILab/EAGLE). We integrated code implementations of multiple open-source Speculative Decoding methods to facilitate unified evaluation.
 
