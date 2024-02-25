@@ -4,7 +4,7 @@ We present the evaluation results on our own devices for reference. All models w
 
 > ❗️It is important to note that model speedup rates may differ across various devices. For more precise speedup metrics, we recommend conducting evaluations of specific models on your intended devices.
 
-### Leaderboard on 3090
+## Leaderboard on 3090
 
 - Device: a single NVIDIA GeForce RTX 3090 GPU (24GB) of 12 CPU cores
 - Testing environment: Pytorch 2.0.1, under CUDA 11.8
@@ -19,11 +19,13 @@ We present the evaluation results on our own devices for reference. All models w
 | [REST](https://sites.google.com/view/rest-llm)               |          1.49x          |    1.23x    |     1.26x     |       1.39x        |         1.34x          |           1.71x           |   1.39x   |
 | [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.15x          |    0.98x    |     1.07x     |       1.06x        |         1.32x          |           1.03x           |   1.11x   |
 
-### Leaderboard on A100
+## Leaderboard on A100
 
 - Device: a single NVIDIA A100 GPU (80GB) of 64 CPU cores 
 - Testing environment: Pytorch 2.0.1, under CUDA 11.4
-- Experimantal Settings: **Vicuna-7B-v1.3**, greedy decoding, FP16 precision
+- Experimantal Settings: greedy decoding, FP16 precision
+
+### Vicuna-7B-v1.3
 
 | Models                                                       | Multi-turn Conversation | Translation | Summarization | Question Answering | Mathematical Reasoning | Retrieval-aug. Generation |  Overall  |
 | ------------------------------------------------------------ | :---------------------: | :---------: | :-----------: | :----------------: | :--------------------: | :-----------------------: | :-------: |
@@ -34,7 +36,7 @@ We present the evaluation results on our own devices for reference. All models w
 | [REST](https://sites.google.com/view/rest-llm)               |          1.72x          |    1.38x    |     1.46x     |       1.80x        |         1.31x          |           1.87x           |   1.59x   |
 | [SpS](https://huggingface.co/blog/assisted-generation)       |          1.78x          |    1.19x    |     1.78x     |       1.58x        |         1.54x          |           1.69x           |   1.59x   |
 
-- Experimantal Settings: **Vicuna-13B-v1.3**, greedy decoding, FP16 precision
+### Vicuna-13B-v1.3
 
 | Models                                                       | Multi-turn Conversation | Translation | Summarization | Question Answering | Mathematical Reasoning |    RAG    |  Overall  |
 | ------------------------------------------------------------ | :---------------------: | :---------: | :-----------: | :----------------: | :--------------------: | :-------: | :-------: |
@@ -45,7 +47,7 @@ We present the evaluation results on our own devices for reference. All models w
 | [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.53x          |    1.08x    |     2.25x     |       1.09x        |         1.65x          |   1.72x   |   1.54x   |
 | [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.57x          |    1.34x    |     1.39x     |       1.40x        |         1.82x          |   1.32x   |   1.48x   |
 
-- Experimantal Settings: **Vicuna-33B-v1.3**, greedy decoding, FP16 precision
+### Vicuna-33B-v1.3
 
 | Models                                                       | Multi-turn Conversation | Translation | Summarization | Question Answering | Mathematical Reasoning | Retrieval-aug. Generation |  Overall  |
 | ------------------------------------------------------------ | :---------------------: | :---------: | :-----------: | :----------------: | :--------------------: | :-----------------------: | :-------: |
