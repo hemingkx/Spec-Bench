@@ -8,9 +8,9 @@ We present the evaluation results on our own devices for reference. All models w
 
 ## Leaderboard on 3090
 
-- Device: a single NVIDIA GeForce RTX 3090 GPU (24GB) of 12 CPU cores
+- Device: a single NVIDIA GeForce RTX 3090 GPU (24GB) with 12 CPU cores
 - Testing environment: Pytorch 2.0.1, under CUDA 11.8
-- Experimantal Settings: Vicuna-7B-v1.3, greedy decoding, FP16 precision, batch size = 1
+- Experimental Settings: Vicuna-7B-v1.3, greedy decoding, FP16 precision, batch size = 1
 
 | Models                                                       | Multi-turn Conversation | Translation | Summarization | Question Answering | Mathematical Reasoning | Retrieval-aug. Generation |  Overall  |
 | ------------------------------------------------------------ | :---------------------: | :---------: | :-----------: | :----------------: | :--------------------: | :-----------------------: | :-------: |
@@ -23,9 +23,9 @@ We present the evaluation results on our own devices for reference. All models w
 
 ## Leaderboard on A100
 
-- Device: a single NVIDIA A100 GPU (80GB) of 64 CPU cores 
+- Device: a single NVIDIA A100 GPU (80GB) with 64 CPU cores 
 - Testing environment: Pytorch 2.0.1, under CUDA 11.4
-- Experimantal Settings: greedy decoding, FP16 precision, batch size = 1
+- Experimental Settings: greedy decoding, FP16 precision, batch size = 1
 
 ### Vicuna-7B-v1.3
 
