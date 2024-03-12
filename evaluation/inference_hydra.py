@@ -354,7 +354,7 @@ def get_model_answers(
                 conv.messages[-1][-1] = output
             # torch.cuda.empty_cache()
             choices.append({"index": i, "turns": turns, "idxs": idxs, "new_tokens": new_tokens, "wall_time": wall_time,
-                            "accept_lengths:": cur_accept_lengths_tree})
+                            "accept_lengths": cur_accept_lengths_tree})
 
         # Dump answers
         os.makedirs(os.path.dirname(answer_file), exist_ok=True)

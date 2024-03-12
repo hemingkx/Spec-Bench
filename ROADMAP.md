@@ -2,8 +2,8 @@
 
 ## Comparative Analysis
 - [x] Integrated [Hydra](https://github.com/zankner/hydra)
+- [x] #Mean accepted tokens
 - [ ] Integrated more leading methods
-- [ ] #Mean accepted tokens
 - [ ] Batched inference
 
 ## Integration
