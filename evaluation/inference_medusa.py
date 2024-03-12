@@ -12,6 +12,7 @@ import shortuuid
 import torch
 from tqdm import tqdm
 
+import numpy as np
 from fastchat.utils import str_to_torch_dtype
 from fastchat.llm_judge.common import load_questions, temperature_config
 from fastchat.model import load_model, get_conversation_template
@@ -28,6 +29,7 @@ def medusa_forward(input_ids, model, tokenizer, medusa_choices, temperature, pos
     assert input_ids.shape[0] == 1, "Only support batch size 1 for now!!"
     # Avoid modifying the input_ids in-place
     input_ids = input_ids.clone()
+    accept_length_list = []
 
     # Cache medusa buffers (the fixed patterns for tree attention)
     if hasattr(model, "medusa_choices") and model.medusa_choices == medusa_choices:
@@ -59,6 +61,7 @@ def medusa_forward(input_ids, model, tokenizer, medusa_choices, temperature, pos
         model.current_length_data = current_length_data
 
     input_len = input_ids.shape[1]
+    cur_length = input_len
     reset_medusa_mode(model)
     medusa_logits, logits = initialize_medusa(
             input_ids, model, medusa_buffers["medusa_attn_mask"], past_key_values
@@ -96,11 +99,14 @@ def medusa_forward(input_ids, model, tokenizer, medusa_choices, temperature, pos
                 past_key_values_data,
                 current_length_data,
             )
+        accept_length_tree = input_ids.shape[1] - cur_length
+        cur_length = accept_length_tree + cur_length
+        accept_length_list.append(accept_length_tree)
         if tokenizer.eos_token_id in input_ids[0, input_len:].tolist():
             break
         if new_token > max_new_token:
             break
-    return input_ids, new_token, idx
+    return input_ids, new_token, idx, accept_length_list
 
 def run_eval(
     model_path,
@@ -224,7 +230,7 @@ def get_model_answers(
             try:
                 torch.cuda.synchronize()
                 start_time = time.time()
-                output_ids, new_token, idx = medusa_forward(
+                output_ids, new_token, idx, accept_length_tree = medusa_forward(
                     torch.as_tensor(input_ids).cuda(),
                     model,
                     tokenizer,
@@ -274,11 +280,12 @@ def get_model_answers(
             conv.messages[-1][-1] = output
     print('Warmup done')
 
-
+    accept_lengths_tree = []
     for question in tqdm(questions):
 
         choices = []
         for i in range(num_choices):
+            cur_accept_lengths_tree = []
             torch.manual_seed(i)
             conv = get_conversation_template(model_id)
             turns = []
@@ -301,7 +308,7 @@ def get_model_answers(
                 try:
                     torch.cuda.synchronize()
                     start_time = time.time()
-                    output_ids, new_token, idx = medusa_forward(
+                    output_ids, new_token, idx, accept_length_tree = medusa_forward(
                         torch.as_tensor(input_ids).cuda(),
                         model,
                         tokenizer,
@@ -313,9 +320,7 @@ def get_model_answers(
                     )
                     torch.cuda.synchronize()
                     total_time = time.time() - start_time
-                    # if model.config.is_encoder_decoder:
-                    #     output_ids = output_ids[0]
-                    # else:
+                    accept_lengths_tree.extend(accept_length_tree)
                     output_ids = output_ids[0][len(input_ids[0]) :]
 
                     # be consistent with the template's stop_token_ids
@@ -352,9 +357,11 @@ def get_model_answers(
                 idxs.append(int(idx))
                 new_tokens.append(int(new_token))
                 wall_time.append(total_time)
+                cur_accept_lengths_tree.extend(accept_length_tree)
                 conv.messages[-1][-1] = output
             # torch.cuda.empty_cache()
-            choices.append({"index": i, "turns": turns, "idxs": idxs, "new_tokens": new_tokens, "wall_time": wall_time})
+            choices.append({"index": i, "turns": turns, "idxs": idxs, "new_tokens": new_tokens, "wall_time": wall_time,
+                            "accept_lengths:": cur_accept_lengths_tree})
 
         # Dump answers
         os.makedirs(os.path.dirname(answer_file), exist_ok=True)
@@ -368,6 +375,7 @@ def get_model_answers(
                 "tstamp": time.time(),
             }
             fout.write(json.dumps(ans_json) + "\n")
+    print("#Mean accepted tokens: ", np.mean(accept_lengths_tree))
 
 
 def reorg_answer_file(answer_file):

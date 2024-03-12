@@ -81,10 +81,10 @@ def greedy_search_pld(
 
     max_len = stopping_criteria[0].max_length
 
-    i = 0
-
+    step = 0
+    accept_length_list = []
     while True:
-        i += 1
+        step += 1
         cur_len = input_ids.shape[-1]
 
         candidate_pred_tokens = find_candidate_pred_tokens(input_ids, draft_matching_window_size,
@@ -131,6 +131,9 @@ def greedy_search_pld(
 
         model_kwargs["past_key_values"] = outputs.past_key_values
 
+        accept_length_tree = new_cur_len - cur_len
+        accept_length_list.append(accept_length_tree)
+
         # stop if we exceed the maximum length
 
         if (valid_tokens == eos_token_id_tensor.item()).any():
@@ -139,4 +142,5 @@ def greedy_search_pld(
         if stopping_criteria(input_ids, scores):
             break
 
-    return input_ids
+    idx = step - 1
+    return input_ids, idx, accept_length_list

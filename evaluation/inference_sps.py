@@ -11,12 +11,14 @@ import time
 import shortuuid
 import torch
 from tqdm import tqdm
+import numpy as np
 
 from fastchat.utils import str_to_torch_dtype
 from fastchat.llm_judge.common import load_questions
 from fastchat.model import load_model, get_conversation_template
 
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationMixin
+from model.sps.decoding import assisted_decoding
 
 def run_eval(
         model_path,
@@ -135,7 +137,8 @@ def get_model_answers(
                 torch.cuda.synchronize()
                 start_time = time.time()
                 model.generation_config.max_new_tokens = max_new_tokens
-                output_ids = model.generate(
+
+                output_ids, idx, accept_length_tree = model.generate(
                     **inputs, generation_config=model.generation_config, assistant_model=drafter, do_sample=do_sample, temperature=temperature)
                 torch.cuda.synchronize()
                 total_time = time.time() - start_time
@@ -179,10 +182,12 @@ def get_model_answers(
             conv.messages[-1][-1] = output
     print('Warmup done')
 
+    accept_lengths_tree = []
     for question in tqdm(questions):
 
         choices = []
         for i in range(num_choices):
+            cur_accept_lengths_tree = []
             torch.manual_seed(i)
             conv = get_conversation_template("vicuna")
             turns = []
@@ -202,13 +207,13 @@ def get_model_answers(
                     torch.cuda.synchronize()
                     start_time = time.time()
                     model.generation_config.max_new_tokens = max_new_tokens
-                    output_ids = model.generate(
+                    output_ids, idx, accept_length_tree = model.generate(
                         **inputs, generation_config=model.generation_config, assistant_model=drafter, do_sample=do_sample, temperature=temperature)
                     torch.cuda.synchronize()
                     total_time = time.time() - start_time
+                    accept_lengths_tree.extend(accept_length_tree)
                     output_ids = output_ids[0][len(input_ids[0]):]
                     new_token = len(output_ids)
-                    idx = new_token - 1
 
                     # be consistent with the template's stop_token_ids
                     if conv.stop_token_ids:
@@ -244,9 +249,11 @@ def get_model_answers(
                 idxs.append(int(idx))
                 new_tokens.append(int(new_token))
                 wall_time.append(total_time)
+                cur_accept_lengths_tree.extend(accept_length_tree)
                 conv.messages[-1][-1] = output
             # torch.cuda.empty_cache()
-            choices.append({"index": i, "turns": turns, "idxs": idxs, "new_tokens": new_tokens, "wall_time": wall_time})
+            choices.append({"index": i, "turns": turns, "idxs": idxs, "new_tokens": new_tokens, "wall_time": wall_time,
+                            "accept_lengths:": cur_accept_lengths_tree})
 
         # Dump answers
         os.makedirs(os.path.dirname(answer_file), exist_ok=True)
@@ -260,6 +267,7 @@ def get_model_answers(
                 "tstamp": time.time(),
             }
             fout.write(json.dumps(ans_json) + "\n")
+    print("#Mean accepted tokens: ", np.mean(accept_lengths_tree))
 
 
 def reorg_answer_file(answer_file):
@@ -351,6 +359,8 @@ if __name__ == "__main__":
     if args.num_gpus_total // args.num_gpus_per_model > 1:
         import ray
         ray.init()
+
+    GenerationMixin.assisted_decoding = assisted_decoding
 
     question_file = f"data/{args.bench_name}/question.jsonl"
     if args.answer_file:

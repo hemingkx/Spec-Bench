@@ -11,6 +11,7 @@ import time
 import shortuuid
 import torch
 from tqdm import tqdm
+import numpy as np
 
 from fastchat.utils import str_to_torch_dtype
 from fastchat.llm_judge.common import load_questions
@@ -122,7 +123,7 @@ def get_model_answers(
             try:
                 torch.cuda.synchronize()
                 start_time = time.time()
-                output_ids = model.greedy_search_pld(inputs.input_ids,
+                output_ids, idx, accept_length_tree = model.greedy_search_pld(inputs.input_ids,
                                               attention_mask=inputs.attention_mask,
                                               stopping_criteria=StoppingCriteriaList([MaxLengthCriteria(
                                               max_length=len(inputs.input_ids[0]) + max_new_tokens)]),
@@ -174,10 +175,12 @@ def get_model_answers(
             conv.messages[-1][-1] = output
     print('Warmup done')
 
+    accept_lengths_tree = []
     for question in tqdm(questions):
 
         choices = []
         for i in range(num_choices):
+            cur_accept_lengths_tree = []
             torch.manual_seed(i)
             conv = get_conversation_template("vicuna")
             turns = []
@@ -196,7 +199,7 @@ def get_model_answers(
                 try:
                     torch.cuda.synchronize()
                     start_time = time.time()
-                    output_ids = model.greedy_search_pld(inputs.input_ids,
+                    output_ids, idx, accept_length_tree = model.greedy_search_pld(inputs.input_ids,
                                                          attention_mask=inputs.attention_mask,
                                                          stopping_criteria=StoppingCriteriaList([MaxLengthCriteria(
                                                          max_length=len(inputs.input_ids[0]) + max_new_tokens)]),
@@ -208,9 +211,9 @@ def get_model_answers(
                                                          return_dict_in_generate=False)
                     torch.cuda.synchronize()
                     total_time = time.time() - start_time
+                    accept_lengths_tree.extend(accept_length_tree)
                     output_ids = output_ids[0][len(input_ids[0]):]
                     new_token = len(output_ids)
-                    idx = new_token - 1
 
                     # be consistent with the template's stop_token_ids
                     if conv.stop_token_ids:
@@ -246,9 +249,11 @@ def get_model_answers(
                 idxs.append(int(idx))
                 new_tokens.append(int(new_token))
                 wall_time.append(total_time)
+                cur_accept_lengths_tree.extend(accept_length_tree)
                 conv.messages[-1][-1] = output
             # torch.cuda.empty_cache()
-            choices.append({"index": i, "turns": turns, "idxs": idxs, "new_tokens": new_tokens, "wall_time": wall_time})
+            choices.append({"index": i, "turns": turns, "idxs": idxs, "new_tokens": new_tokens, "wall_time": wall_time,
+                            "accept_lengths:": cur_accept_lengths_tree})
 
         # Dump answers
         os.makedirs(os.path.dirname(answer_file), exist_ok=True)
@@ -262,6 +267,7 @@ def get_model_answers(
                 "tstamp": time.time(),
             }
             fout.write(json.dumps(ans_json) + "\n")
+    print("#Mean accepted tokens: ", np.mean(accept_lengths_tree))
 
 
 def reorg_answer_file(answer_file):

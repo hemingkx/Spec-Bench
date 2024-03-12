@@ -44,7 +44,7 @@ def jacobi_greedy_search_multilevel(
     chat: bool = False, 
     stop_token: Optional[str]= None,
     **model_kwargs,
-) -> Union[GreedySearchOutput, torch.LongTensor]:
+):
     r"""
     Generates sequences of token ids for models with a language modeling head using **greedy decoding** and can be
     used for text-decoder, text-to-text, speech-to-text, and vision-to-text models.
@@ -238,10 +238,11 @@ def jacobi_greedy_search_multilevel(
         init = self.tokenizer.decode(all_old_tokens, skip_special_tokens=True, \
                                    spaces_between_special_tokens=False, clean_up_tokenization_spaces=True,)
         prev = len(init)
-    
 
+    accept_length_list = []
     #print("first input: ", init, flush=True)
     while True:
+        cur_length = len(all_old_tokens)
         #print("decode")
         if synced_gpus:
             # Under synced_gpus the `forward` call must continue until all gpus complete their sequence.
@@ -454,7 +455,10 @@ def jacobi_greedy_search_multilevel(
             prev = len(all_str)
         
         input_ids = torch.cat([input_ids, torch.tensor(hits[:max_hit + 1], device=next_tokens.device, dtype=next_tokens.dtype).unsqueeze(0)], dim=-1)
-        
+
+        accept_length_tree = len(all_old_tokens) - cur_length
+        accept_length_list.append(accept_length_tree)
+
         if streamer is not None:
             streamer.put(next_tokens.cpu())
         model_kwargs = self._update_model_kwargs_for_generation(
@@ -488,6 +492,7 @@ def jacobi_greedy_search_multilevel(
         all_old_tokens = all_old_tokens[:init_len + max_length]
         input_ids = input_ids[:][:init_len + max_length]
 
+
     if DEBUG and LOCAL_RANK == 0:
         #print("===DEBUG INFO===", " generated tokens: ", len(all_old_tokens) - init_len, "total step: ", steps, len(token_map.keys()), sum(len(value) for value in token_map.values()), input_ids.numel(), reps)
 
@@ -495,7 +500,7 @@ def jacobi_greedy_search_multilevel(
         print("Generated tokens: ", len(all_old_tokens) - init_len, "Total steps: ", steps, " Compression ratio: ", round((len(all_old_tokens) - init_len) / steps, 2))
         print("======================================================================================", end="")
         CONFIG_MAP["log"].append([len(all_old_tokens) - init_len, steps, round((len(all_old_tokens) - init_len) / steps, 2)])
-    
+
 
     if streamer is not None:
         streamer.end()
@@ -519,7 +524,8 @@ def jacobi_greedy_search_multilevel(
                 hidden_states=decoder_hidden_states,
             )
     else:
-        return input_ids
+        idx = steps - 1
+        return input_ids, idx, accept_length_list
 
 
 

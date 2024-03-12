@@ -9,6 +9,7 @@ import os
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3,4,5,6,7"
 import time
 
+import numpy as np
 import shortuuid
 from fastchat.utils import str_to_torch_dtype
 from fastchat.llm_judge.common import load_questions
@@ -21,11 +22,12 @@ from model.eagle.utils import *
 from model.eagle.choices import *
 
 
-def ea_forward(input_ids, model, tokenizer, tree_choices, logits_processor=None, max_steps=512):
+def ea_forward(input_ids, model, tokenizer, max_new_token, tree_choices, logits_processor=None, max_steps=512):
     assert input_ids.shape[0] == 1, "Only support batch size 1 for now!!"
     # Avoid modifying the input_ids in-place
     input_ids = input_ids.clone()
     model.ea_layer.reset_kv()
+    accept_length_list = []
 
     if hasattr(model, "tree_choices") and model.tree_choices == tree_choices:
         tree_buffers = model.tree_buffers
@@ -56,6 +58,7 @@ def ea_forward(input_ids, model, tokenizer, tree_choices, logits_processor=None,
         model.current_length_data = current_length_data
 
     input_len = input_ids.shape[1]
+    cur_length = input_len
     reset_tree_mode(model)
     tree_logits, logits, hidden_state, sample_token = initialize_tree(
         input_ids, model, tree_buffers["tree_attn_mask"], past_key_values, logits_processor
@@ -99,13 +102,16 @@ def ea_forward(input_ids, model, tokenizer, tree_choices, logits_processor=None,
             hidden_state_new,
             sample_p
         )
+        accept_length_tree = input_ids.shape[1] - cur_length
+        cur_length = accept_length_tree + cur_length
+        accept_length_list.append(accept_length_tree)
         if tokenizer.eos_token_id in input_ids[0, input_len:].tolist():
             break
-        if new_token > 1024:
+        if new_token > max_new_token:
             break
         if input_ids.shape[1] > 1960:
             break
-    return input_ids, new_token, idx
+    return input_ids, new_token, idx, accept_length_list
 
 
 def run_eval(
@@ -227,10 +233,11 @@ def get_model_answers(
             torch.cuda.synchronize()
             start_time = time.time()
 
-            output_ids, new_token, idx = ea_forward(
+            output_ids, new_token, idx, accept_length_tree = ea_forward(
                 torch.as_tensor(input_ids).cuda(),
                 model,
                 tokenizer,
+                max_new_token,
                 tree_choices,
                 logits_processor,
             )
@@ -272,11 +279,12 @@ def get_model_answers(
             conv.messages[-1][-1] = output
     print('Warmup done')
 
-    # questions=questions[6:]
+    accept_lengths_tree = []
     for question in tqdm(questions):
 
         choices = []
         for i in range(num_choices):
+            cur_accept_lengths_tree = []
             torch.manual_seed(i)
             conv = get_conversation_template("vicuna")
             turns = []
@@ -293,15 +301,17 @@ def get_model_answers(
                 try:
                     torch.cuda.synchronize()
                     start_time = time.time()
-                    output_ids, new_token, idx = ea_forward(
+                    output_ids, new_token, idx, accept_length_tree = ea_forward(
                         torch.as_tensor(input_ids).cuda(),
                         model,
                         tokenizer,
+                        max_new_token,
                         tree_choices,
                         logits_processor,
                     )
                     torch.cuda.synchronize()
                     total_time = time.time() - start_time
+                    accept_lengths_tree.extend(accept_length_tree)
                     output_ids = output_ids[0][len(input_ids[0]):]
 
                     if conv.stop_token_ids:
@@ -337,9 +347,11 @@ def get_model_answers(
                 idxs.append(int(idx))
                 new_tokens.append(int(new_token))
                 wall_time.append(total_time)
+                cur_accept_lengths_tree.extend(accept_length_tree)
                 conv.messages[-1][-1] = output
             # torch.cuda.empty_cache()
-            choices.append({"index": i, "turns": turns, "idxs": idxs, "new_tokens": new_tokens, "wall_time": wall_time})
+            choices.append({"index": i, "turns": turns, "idxs": idxs, "new_tokens": new_tokens, "wall_time": wall_time,
+                            "accept_lengths:": cur_accept_lengths_tree})
 
         # Dump answers
         os.makedirs(os.path.dirname(answer_file), exist_ok=True)
@@ -353,6 +365,7 @@ def get_model_answers(
                 "tstamp": time.time(),
             }
             fout.write(json.dumps(ans_json) + "\n")
+    print("#Mean accepted tokens: ", np.mean(accept_lengths_tree))
 
 
 def reorg_answer_file(answer_file):

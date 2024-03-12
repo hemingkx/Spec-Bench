@@ -55,7 +55,7 @@ def rest_forward(input_ids, model, tokenizer, max_new_token, temperature, top_p,
         model.current_length_data = current_length_data
 
     input_len = input_ids.shape[1]
-    cur_length = input_len + 1
+    cur_length = input_len
     model.base_model.model.draft_mask = None
     logits = initialize_logits(
         input_ids, model, past_key_values
@@ -284,7 +284,7 @@ def get_model_answers(
     for question in tqdm(questions):
         choices = []
         for i in range(num_choices):
-            accept_lengths_tree_this = []
+            cur_accept_lengths_tree = []
             torch.manual_seed(i)
             conv = get_conversation_template("vicuna")
             turns = []
@@ -358,11 +358,11 @@ def get_model_answers(
                 idxs.append(int(idx))
                 new_tokens.append(int(new_token))
                 wall_time.append(total_time)
-                accept_lengths_tree_this.extend(accept_length_tree)
+                cur_accept_lengths_tree.extend(accept_length_tree)
                 conv.messages[-1][-1] = output
             # torch.cuda.empty_cache()
             choices.append({"index": i, "turns": turns, "idxs": idxs, "new_tokens": new_tokens, "wall_time": wall_time,
-                            "accept_lengths:": accept_lengths_tree_this})
+                            "accept_lengths:": cur_accept_lengths_tree})
 
         # Dump answers
         os.makedirs(os.path.dirname(answer_file), exist_ok=True)
@@ -376,7 +376,7 @@ def get_model_answers(
                 "tstamp": time.time(),
             }
             fout.write(json.dumps(ans_json) + "\n")
-    print("accept_lengths_tree: ", np.mean(accept_lengths_tree))
+    print("#Mean accepted tokens: ", np.mean(accept_lengths_tree))
 
 
 def reorg_answer_file(answer_file):
