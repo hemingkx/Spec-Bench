@@ -21,6 +21,7 @@ Spec-Bench is a comprehensive benchmark designed for assessing Speculative Decod
 Currently, Spec-Bench supports the evaluation of the following open source models:
 
 - [EAGLE](https://sites.google.com/view/eagle-llm)
+- [Hydra](https://github.com/zankner/hydra)
 - [Medusa](https://sites.google.com/view/medusa-llm)
 - [Speculative Sampling](https://huggingface.co/blog/assisted-generation)
 - [Prompt Lookup Decoding](https://github.com/apoorvumang/prompt-lookup-decoding)
@@ -42,6 +43,7 @@ Download corresponding model weights (if required) and modify the checkpoint pat
 
 - [vicuna-v1.3](https://huggingface.co/lmsys/vicuna-7b-v1.3)
 - [EAGLE](https://github.com/SafeAILab/EAGLE?tab=readme-ov-file#eagle-weights)
+- [Hydra](https://github.com/zankner/hydra?tab=readme-ov-file#model-weights)
 - [Medusa-1](https://github.com/FasterDecoding/Medusa?tab=readme-ov-file#medusa-1)
 - [Speculative Sampling](https://github.com/NJUNLP/MCSD?tab=readme-ov-file#model-release)
 

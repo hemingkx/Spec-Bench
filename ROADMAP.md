@@ -1,10 +1,10 @@
 # Roadmap
 
 ## Comparative Analysis
-- [ ] More leading methods
-- [ ] Average acceptance rate of drafted tokens
+- [x] Integrated [Hydra](https://github.com/zankner/hydra)
+- [ ] Integrated more leading methods
+- [ ] #Mean accepted tokens
 - [ ] Batched inference
-- [ ] Distributed inference
 
 ## Integration
 - [ ] [vllm](https://github.com/vllm-project/vllm)
