@@ -62,10 +62,10 @@ def speed(jsonl_file, jsonl_file_base, tokenizer, task=None, report=True):
 
     if report:
         print("="*30, "Task: ", task, "="*30)
+	print("#Mean accepted tokens: ", np.mean(accept_lengths_list))
         print('Tokens per second: ', tokens_per_second)
         print('Tokens per second for the baseline: ', tokens_per_second_baseline)
         print("Speedup ratio: ", speedup_ratio)
-        print("#Mean accepted tokens: ", np.mean(accept_lengths_list))
     return tokens_per_second, tokens_per_second_baseline, speedup_ratio, accept_lengths_list
 
 
