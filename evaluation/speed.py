@@ -72,7 +72,7 @@ def speed(jsonl_file, jsonl_file_base, tokenizer, task=None, report=True):
 def get_single_speedup(jsonl_file, jsonl_file_base):
     tokenizer_path="/home/xiaheming/data/pretrained_models/Vicuna/vicuna-7b-v1.3/"
     for subtask_name in ["mt_bench", "translation", "summarization", "qa", "math_reasoning", "rag", "overall"]:
-        speed(jsonl_file_base, jsonl_file, tokenizer_path, task=subtask_name)
+        speed(jsonl_file, jsonl_file_base, tokenizer_path, task=subtask_name)
 
 
 def get_mean_speedup():
