@@ -4,7 +4,7 @@ from transformers import AutoTokenizer
 import numpy as np
 
 
-def speed(jsonl_file_base, jsonl_file, tokenizer, task=None, report=True):
+def speed(jsonl_file, jsonl_file_base, tokenizer, task=None, report=True):
     tokenizer=AutoTokenizer.from_pretrained(tokenizer)
     mt_bench_list = ["writing", "roleplay", "reasoning", "math" , "coding", "extraction", "stem", "humanities"]
 
@@ -77,7 +77,7 @@ def get_single_speedup(jsonl_file, jsonl_file_base):
 
 def get_mean_speedup():
     tokenizer_path="/home/xiaheming/data/pretrained_models/Vicuna/vicuna-7b-v1.3/"
-    jsonl_file_name = "vicuna-7b-v1.3-hydra-float16-temperature-0.0.jsonl"
+    jsonl_file_name = "vicuna-7b-v1.3-lade-level-5-win-7-guess-7-float16.jsonl"
     jsonl_file_base_name = "vicuna-7b-v1.3-vanilla-float16-temp-0.0.jsonl"
     jsonl_file_run_list = [
         "../data/spec_bench/model_answer_temp0_run_1/{}".format(jsonl_file_name),
@@ -97,11 +97,14 @@ def get_mean_speedup():
         speedup_ratio_list = []
         accept_lengths_list = []
         for jsonl_file, jsonl_file_base in zip(jsonl_file_run_list, jsonl_file_base_run_list):
-            tokens_per_second, tokens_per_second_baseline, speedup_ratio, accept_lengths = speed(jsonl_file_base, jsonl_file, tokenizer_path, task=subtask_name, report=False)
+            tokens_per_second, tokens_per_second_baseline, speedup_ratio, accept_lengths = speed(jsonl_file, jsonl_file_base, tokenizer_path, task=subtask_name, report=False)
             tokens_per_second_list.append(tokens_per_second)
             tokens_per_second_baseline_list.append(tokens_per_second_baseline)
             speedup_ratio_list.append(speedup_ratio)
             accept_lengths_list.extend(accept_lengths)
+
+        avg_accept_lengths = np.mean(accept_lengths_list)
+        print("#Mean accepted tokens: {}".format(avg_accept_lengths))
 
         avg = np.mean(tokens_per_second_list)
         std = np.std(tokens_per_second_list, ddof=1)  # np.sqrt(( a.var() * a.size) / (a.size - 1))
@@ -114,10 +117,8 @@ def get_mean_speedup():
         avg_speedup = np.mean(speedup_ratio_list)
         std_speedup = np.std(speedup_ratio_list, ddof=1)  # np.sqrt(( a.var() * a.size) / (a.size - 1))
         print("Speedup ratio: Mean result: {}, Std result: {}".format(avg_speedup, std_speedup))
-
-        avg_accept_lengths = np.mean(accept_lengths_list)
-        print("#Mean accepted tokens: ".format(avg_accept_lengths))
         print("\n")
+
 
 
 if __name__ == "__main__":
@@ -125,20 +126,20 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--file-path",
-        default='../data/spec_bench/model_answer/vicuna-7b-v1.3-eagle-float16-temperature-0.0.jsonl',
+        default='../data/spec_bench/model_answer_temp0_run_1/vicuna-7b-v1.3-sps-68m-float16-temp-0.0.jsonl',
         type=str,
         help="The file path of evaluated Speculative Decoding methods.",
     )
     parser.add_argument(
         "--base-path",
-        default='../data/spec_bench/model_answer/vicuna-7b-v1.3-vanilla-float16-temp-0.0.jsonl',
+        default='../data/spec_bench/model_answer_temp0_run_1/vicuna-7b-v1.3-vanilla-float16-temp-0.0.jsonl',
         type=str,
         help="The file path of evaluated baseline.",
     )
     parser.add_argument(
         "--mean-report",
         action="store_true",
-        default=False,
+        default=True,
         help="report mean speedup over different runs")
 
     args = parser.parse_args()
