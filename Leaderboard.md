@@ -34,7 +34,8 @@ We present the evaluation results on our own devices for reference. All models w
 | ------------------------------------------------------------ | :---------------------: | :---------: | :------------: | :----------------: | :--------------------: | :-----------------------: | :-------: |
 | [Medusa](https://sites.google.com/view/medusa-llm)🏅          |        **2.79x**        |  **2.36x**  |     2.14x      |     **2.36x**      |         2.77x          |           2.05x           | **2.42x** |
 | [EAGLE](https://sites.google.com/view/eagle-llm)🥈            |          2.75x          |    2.08x    |     2.32x      |       2.23x        |       **2.79x**        |         **2.15x**         |   2.39x   |
-| [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/)🥉 |          1.95x          |    1.61x    |     1.63x      |       1.73x        |         2.16x          |           1.50x           |   1.77x   |
+| [Hydra](https://github.com/zankner/hydra)🥉                   |          2.51x          |    2.01x    |     1.84x      |       2.09x        |         2.58x          |           1.83x           |   2.15x   |
+| [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.95x          |    1.61x    |     1.63x      |       1.73x        |         2.16x          |           1.50x           |   1.77x   |
 | [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.67x          |    1.06x    |   **2.59x**    |       1.16x        |         1.63x          |           1.83x           |   1.66x   |
 | [REST](https://sites.google.com/view/rest-llm)               |          1.72x          |    1.38x    |     1.46x      |       1.80x        |         1.31x          |           1.87x           |   1.59x   |
 | [SpS](https://huggingface.co/blog/assisted-generation)       |          1.78x          |    1.19x    |     1.78x      |       1.58x        |         1.54x          |           1.69x           |   1.59x   |
@@ -44,8 +45,9 @@ We present the evaluation results on our own devices for reference. All models w
 | Models                                                       | Multi-turn Conversation | Translation | Summa-rization | Question Answering | Mathematical Reasoning |    RAG    |  Overall  |
 | ------------------------------------------------------------ | :---------------------: | :---------: | :------------: | :----------------: | :--------------------: | :-------: | :-------: |
 | [EAGLE](https://sites.google.com/view/eagle-llm)🏅            |        **2.88x**        |  **2.24x**  |   **2.52x**    |     **2.24x**      |       **2.90x**        | **2.34x** | **2.53x** |
-| [Medusa](https://sites.google.com/view/medusa-llm)🥈          |          2.39x          |    2.12x    |     1.92x      |       2.07x        |         2.49x          |   1.88x   |   2.16x   |
-| [SpS](https://huggingface.co/blog/assisted-generation)🥉      |          1.73x          |    1.25x    |     1.76x      |       1.53x        |         1.68x          |   1.73x   |   1.61x   |
+| [Hydra](https://github.com/zankner/hydra)🥈                   |          2.51x          |    1.96x    |     1.96x      |       2.02x        |         2.55x          |   1.97x   |   2.17x   |
+| [Medusa](https://sites.google.com/view/medusa-llm)🥉          |          2.39x          |    2.12x    |     1.92x      |       2.07x        |         2.49x          |   1.88x   |   2.16x   |
+| [SpS](https://huggingface.co/blog/assisted-generation)       |          1.73x          |    1.25x    |     1.76x      |       1.53x        |         1.68x          |   1.73x   |   1.61x   |
 | [REST](https://sites.google.com/view/rest-llm)               |          1.68x          |    1.31x    |     1.51x      |       1.67x        |         1.29x          |   1.96x   |   1.56x   |
 | [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.53x          |    1.08x    |     2.25x      |       1.09x        |         1.65x          |   1.72x   |   1.54x   |
 | [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.57x          |    1.34x    |     1.39x      |       1.40x        |         1.82x          |   1.32x   |   1.48x   |
@@ -55,8 +57,9 @@ We present the evaluation results on our own devices for reference. All models w
 | Models                                                       | Multi-turn Conversation | Translation | Summa-rization | Question Answering | Mathematical Reasoning | Retrieval-aug. Generation |  Overall  |
 | ------------------------------------------------------------ | :---------------------: | :---------: | :------------: | :----------------: | :--------------------: | :-----------------------: | :-------: |
 | [EAGLE](https://sites.google.com/view/eagle-llm)🏅            |        **2.81x**        |  **2.14x**  |   **2.53x**    |     **2.19x**      |       **3.01x**        |         **2.31x**         | **2.50x** |
-| [Medusa](https://sites.google.com/view/medusa-llm)🥈          |          2.22x          |    1.95x    |     1.85x      |       1.87x        |         2.32x          |           1.84x           |   2.01    |
-| [SpS](https://huggingface.co/blog/assisted-generation)🥉      |          1.79x          |    1.31x    |     1.80x      |       1.57x        |         1.73x          |           1.69x           |   1.65x   |
+| [Hydra](https://github.com/zankner/hydra)🥈                   |          2.63x          |    2.05x    |     2.08x      |       2.16x        |         2.76x          |           2.11x           |   2.31x   |
+| [Medusa](https://sites.google.com/view/medusa-llm)🥉          |          2.22x          |    1.95x    |     1.85x      |       1.87x        |         2.32x          |           1.84x           |   2.01x   |
+| [SpS](https://huggingface.co/blog/assisted-generation)       |          1.79x          |    1.31x    |     1.80x      |       1.57x        |         1.73x          |           1.69x           |   1.65x   |
 | [REST](https://sites.google.com/view/rest-llm)               |          1.71x          |    1.39x    |     1.57x      |       1.69x        |         1.34x          |           1.89x           |   1.59x   |
 | [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.45x          |    1.06x    |     1.98x      |       1.07x        |         1.54x          |           1.43x           |   1.41x   |
 | [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.46x          |    1.21x    |     1.32x      |       1.29x        |         1.71x          |           1.28x           |   1.38x   |
