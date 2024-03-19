@@ -14,7 +14,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from model.pld.pld import greedy_search_pld
 
 
-def lookahead_forward(inputs, model, tokenizer, max_new_tokens):
+def pld_forward(inputs, model, tokenizer, max_new_tokens):
     input_ids = inputs.input_ids
     output_ids, idx, accept_length_list = model.greedy_search_pld(
               inputs.input_ids,
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     run_eval(
         model=model,
         tokenizer=tokenizer,
-        forward_func=lookahead_forward,
+        forward_func=pld_forward,
         model_id=args.model_id,
         question_file=question_file,
         question_begin=args.question_begin,
