@@ -62,7 +62,7 @@ def speed(jsonl_file, jsonl_file_base, tokenizer, task=None, report=True):
 
     if report:
         print("="*30, "Task: ", task, "="*30)
-	print("#Mean accepted tokens: ", np.mean(accept_lengths_list))
+        print("#Mean accepted tokens: ", np.mean(accept_lengths_list))
         print('Tokens per second: ', tokens_per_second)
         print('Tokens per second for the baseline: ', tokens_per_second_baseline)
         print("Speedup ratio: ", speedup_ratio)
@@ -126,20 +126,20 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--file-path",
-        default='../data/spec_bench/model_answer_temp0_run_1/vicuna-7b-v1.3-sps-68m-float16-temp-0.0.jsonl',
+        default='../data/spec_bench/model_answer/vicuna-7b-v1.3-sps-68m-float16-temp-0.0.jsonl',
         type=str,
         help="The file path of evaluated Speculative Decoding methods.",
     )
     parser.add_argument(
         "--base-path",
-        default='../data/spec_bench/model_answer_temp0_run_1/vicuna-7b-v1.3-vanilla-float16-temp-0.0.jsonl',
+        default='../data/spec_bench/model_answer/vicuna-7b-v1.3-vanilla-float16-temp-0.0.jsonl',
         type=str,
         help="The file path of evaluated baseline.",
     )
     parser.add_argument(
         "--mean-report",
         action="store_true",
-        default=True,
+        default=False,
         help="report mean speedup over different runs")
 
     args = parser.parse_args()
