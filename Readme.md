@@ -28,6 +28,12 @@ Currently, Spec-Bench supports the evaluation of the following open source model
 - [REST](https://sites.google.com/view/rest-llm/)
 - [Lookahead Decoding](https://lmsys.org/blog/2023-11-21-lookahead-decoding/)
 
+## Update
+
+**2024.3.12**: We now support statistics for [#Mean accepted tokens](https://github.com/hemingkx/Spec-Bench/blob/main/evaluation/speed.py#L65).
+
+**2024.3.11**: We have integrated [Hydra](https://github.com/zankner/hydra) into Spec-Bench, check it out!
+
 ## Installation
 
 ```
