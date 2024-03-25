@@ -42,15 +42,15 @@ We present the evaluation results on our own devices for reference. All models w
 
 ### Vicuna-13B-v1.3
 
-| Models                                                       | Multi-turn Conversation | Translation | Summa-rization | Question Answering | Mathematical Reasoning |    RAG    |  Overall  |
-| ------------------------------------------------------------ | :---------------------: | :---------: | :------------: | :----------------: | :--------------------: | :-------: | :-------: |
-| [EAGLE](https://sites.google.com/view/eagle-llm)🏅            |        **2.88x**        |  **2.24x**  |   **2.52x**    |     **2.24x**      |       **2.90x**        | **2.34x** | **2.53x** |
-| [Hydra](https://github.com/zankner/hydra)🥈                   |          2.51x          |    1.96x    |     1.96x      |       2.02x        |         2.55x          |   1.97x   |   2.17x   |
-| [Medusa](https://sites.google.com/view/medusa-llm)🥉          |          2.39x          |    2.12x    |     1.92x      |       2.07x        |         2.49x          |   1.88x   |   2.16x   |
-| [SpS](https://huggingface.co/blog/assisted-generation)       |          1.73x          |    1.25x    |     1.76x      |       1.53x        |         1.68x          |   1.73x   |   1.61x   |
-| [REST](https://sites.google.com/view/rest-llm)               |          1.68x          |    1.31x    |     1.51x      |       1.67x        |         1.29x          |   1.96x   |   1.56x   |
-| [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.53x          |    1.08x    |     2.25x      |       1.09x        |         1.65x          |   1.72x   |   1.54x   |
-| [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.57x          |    1.34x    |     1.39x      |       1.40x        |         1.82x          |   1.32x   |   1.48x   |
+| Models                                                       | Multi-turn Conversation | Translation | Summa-rization | Question Answering | Mathematical Reasoning | Retrieval-aug. Generation |  Overall  |
+| ------------------------------------------------------------ | :---------------------: | :---------: | :------------: | :----------------: | :--------------------: | :-----------------------: | :-------: |
+| [EAGLE](https://sites.google.com/view/eagle-llm)🏅            |        **2.88x**        |  **2.24x**  |   **2.52x**    |     **2.24x**      |       **2.90x**        |         **2.34x**         | **2.53x** |
+| [Hydra](https://github.com/zankner/hydra)🥈                   |          2.51x          |    1.96x    |     1.96x      |       2.02x        |         2.55x          |           1.97x           |   2.17x   |
+| [Medusa](https://sites.google.com/view/medusa-llm)🥉          |          2.39x          |    2.12x    |     1.92x      |       2.07x        |         2.49x          |           1.88x           |   2.16x   |
+| [SpS](https://huggingface.co/blog/assisted-generation)       |          1.73x          |    1.25x    |     1.76x      |       1.53x        |         1.68x          |           1.73x           |   1.61x   |
+| [REST](https://sites.google.com/view/rest-llm)               |          1.68x          |    1.31x    |     1.51x      |       1.67x        |         1.29x          |           1.96x           |   1.56x   |
+| [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.53x          |    1.08x    |     2.25x      |       1.09x        |         1.65x          |           1.72x           |   1.54x   |
+| [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.57x          |    1.34x    |     1.39x      |       1.40x        |         1.82x          |           1.32x           |   1.48x   |
 
 ### Vicuna-33B-v1.3
 
