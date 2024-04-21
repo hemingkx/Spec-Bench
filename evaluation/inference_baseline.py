@@ -20,9 +20,9 @@ def baseline_forward(inputs, model, tokenizer, max_new_tokens, temperature=0.0, 
         max_new_tokens=max_new_tokens,
     )
     new_token = len(output_ids[0][len(input_ids[0]):])
-    idx = new_token - 1
+    step = new_token
     accept_length_list = [1] * new_token
-    return output_ids, new_token, idx, accept_length_list
+    return output_ids, new_token, step, accept_length_list
 
 
 if __name__ == "__main__":

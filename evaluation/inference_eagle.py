@@ -99,12 +99,19 @@ def ea_forward(inputs, model, tokenizer, max_new_tokens, tree_choices=None, logi
         cur_length = accept_length_tree + cur_length
         accept_length_list.append(accept_length_tree)
         if tokenizer.eos_token_id in input_ids[0, input_len:].tolist():
+            for i, id in enumerate(input_ids[0, input_len:]):
+                if id == tokenizer.eos_token_id:
+                    eos_token_ids_index = i
+            invalid_len = len(input_ids[0, input_len:]) - eos_token_ids_index - 1
+            if invalid_len > 0:
+                accept_length_list[-1] -= invalid_len
+                new_token -= invalid_len
             break
         if new_token > max_new_tokens:
             break
         if input_ids.shape[1] > 1960:
             break
-    return input_ids, new_token, idx, accept_length_list
+    return input_ids, new_token, idx+1, accept_length_list
 
 
 if __name__ == "__main__":

@@ -25,7 +25,7 @@ def lookahead_forward(inputs, model, tokenizer, max_new_tokens):
         max_new_tokens=max_new_tokens,
     )
     new_token = len(output_ids[0][len(input_ids[0]):])
-    return output_ids, new_token, idx, accept_length_list
+    return output_ids, new_token, idx+1, accept_length_list
 
 
 if __name__ == "__main__":

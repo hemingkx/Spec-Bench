@@ -26,9 +26,17 @@ def pld_forward(inputs, model, tokenizer, max_new_tokens):
               pad_token_id=tokenizer.pad_token_id,
               eos_token_id=tokenizer.eos_token_id,
               return_dict_in_generate=False)
-    new_token = len(output_ids[0][len(input_ids[0]):])
-    idx = new_token - 1
-    return output_ids, new_token, idx, accept_length_list
+    input_len = len(input_ids[0])
+    new_token = len(output_ids[0][input_len:])
+    if tokenizer.eos_token_id in output_ids[0, input_len:].tolist():
+        for i, id in enumerate(output_ids[0, input_len:]):
+            if id == tokenizer.eos_token_id:
+                eos_token_ids_index = i
+        invalid_len = len(output_ids[0, input_len:]) - eos_token_ids_index - 1
+        if invalid_len > 0:
+            accept_length_list[-1] -= invalid_len
+            new_token -= invalid_len
+    return output_ids, new_token, idx+1, accept_length_list
 
 
 if __name__ == "__main__":

@@ -93,7 +93,7 @@ def rest_forward(inputs, model, tokenizer, max_new_tokens, temperature=0.0, top_
             break
         if new_token > max_new_tokens:
             break
-    return input_ids, new_token, idx, accept_length_list
+    return input_ids, new_token, idx+1, accept_length_list
 
 
 if __name__ == "__main__":

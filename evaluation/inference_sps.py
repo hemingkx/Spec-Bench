@@ -19,7 +19,7 @@ def sps_forward(inputs, model, tokenizer, max_new_tokens, do_sample=False, tempe
     output_ids, idx, accept_length_list = model.generate(
         **inputs, generation_config=model.generation_config, assistant_model=drafter, do_sample=do_sample, temperature=temperature)
     new_token = len(output_ids[0][len(input_ids[0]):])
-    return output_ids, new_token, idx, accept_length_list
+    return output_ids, new_token, idx+1, accept_length_list
 
 
 if __name__ == "__main__":

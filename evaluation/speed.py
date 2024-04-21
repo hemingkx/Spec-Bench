@@ -69,8 +69,7 @@ def speed(jsonl_file, jsonl_file_base, tokenizer, task=None, report=True):
     return tokens_per_second, tokens_per_second_baseline, speedup_ratio, accept_lengths_list
 
 
-def get_single_speedup(jsonl_file, jsonl_file_base):
-    tokenizer_path="/home/xiaheming/data/pretrained_models/Vicuna/vicuna-7b-v1.3/"
+def get_single_speedup(jsonl_file, jsonl_file_base, tokenizer_path):
     for subtask_name in ["mt_bench", "translation", "summarization", "qa", "math_reasoning", "rag", "overall"]:
         speed(jsonl_file, jsonl_file_base, tokenizer_path, task=subtask_name)
 
@@ -126,13 +125,19 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--file-path",
-        default='../data/spec_bench/model_answer/vicuna-7b-v1.3-sps-68m-float16-temp-0.0.jsonl',
+        default='../data/mini_bench/model_answer/vicuna-7b-v1.3-eagle-float32-temperature-0.0.jsonl',
         type=str,
         help="The file path of evaluated Speculative Decoding methods.",
     )
     parser.add_argument(
         "--base-path",
-        default='../data/spec_bench/model_answer/vicuna-7b-v1.3-vanilla-float16-temp-0.0.jsonl',
+        default='../data/mini_bench/model_answer/vicuna-7b-v1.3-vanilla-float32-temp-0.0.jsonl',
+        type=str,
+        help="The file path of evaluated baseline.",
+    )
+    parser.add_argument(
+        "--tokenizer-path",
+        default='/data/heming/pretrained_models/vicuna-7b-v1.3/',
         type=str,
         help="The file path of evaluated baseline.",
     )
@@ -146,4 +151,4 @@ if __name__ == "__main__":
     if args.mean_report:
         get_mean_speedup()
     else:
-        get_single_speedup(jsonl_file=args.file_path, jsonl_file_base=args.base_path)
+        get_single_speedup(jsonl_file=args.file_path, jsonl_file_base=args.base_path, tokenizer_path=args.tokenizer_path)

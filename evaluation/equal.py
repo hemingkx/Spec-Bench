@@ -1,6 +1,6 @@
 import json
 import argparse
-import os.path
+import os
 
 
 def get_content(jsonfile_path="../data/mt_bench/model_answer/vicuna-7b-v1.3-pld-float32.jsonl",
@@ -38,6 +38,8 @@ def run_compare(file_path, jsonfile1, jsonfile2):
     jsonfile_path2 = os.path.join(file_path, jsonfile2)
     output_path1 = file_path + "txt/" + jsonfile1.replace("jsonl", "txt")
     output_path2 = file_path + "txt/" + jsonfile2.replace("jsonl", "txt")
+    if not os.path.exists(file_path + "txt/"):
+        os.makedirs(file_path + "txt/")
     get_content(jsonfile_path1, output_path1)
     get_content(jsonfile_path2, output_path2)
     if txt_compare(output_path1, output_path2):
@@ -51,16 +53,19 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--file-path",
+        default='../data/spec_bench/model_answer/',
         type=str,
         help="The file path of model answers.",
     )
     parser.add_argument(
         "--jsonfile1",
+        default='vicuna-7b-v1.3-vanilla-float32-temp-0.0.jsonl',
         type=str,
         help="The file name of the first evaluated method.",
     )
     parser.add_argument(
         "--jsonfile2",
+        default='vicuna-7b-v1.3-sps-68m-float32-temp-0.0.jsonl',
         type=str,
         help="The file name of the second evaluated method.",
     )

@@ -57,7 +57,7 @@ Download corresponding model weights (if required) and modify the checkpoint pat
 
 #### REST (Optional)
 
-**Build DraftRetriever from source**
+##### Build DraftRetriever from source
 
 ```
 cd model/rest/DraftRetriever

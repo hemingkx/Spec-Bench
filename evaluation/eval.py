@@ -94,20 +94,21 @@ def get_model_answers(
         torch.manual_seed(0)
         conv = get_conversation_template("vicuna")
         turns = []
-        idxs = []
+        steps = []
         new_tokens = []
         wall_time = []
         for j in range(len(question["turns"])):
             qs = question["turns"][j]
             conv.append_message(conv.roles[0], qs)
             conv.append_message(conv.roles[1], None)
+            conv.stop_str = "</s>"
             prompt = conv.get_prompt()
             inputs = tokenizer([prompt], return_tensors="pt").to("cuda")
             input_ids = inputs.input_ids
             try:
                 torch.cuda.synchronize()
                 start_time = time.time()
-                output_ids, new_token, idx, accept_length_tree = forward_func(
+                output_ids, new_token, step, accept_length_tree = forward_func(
                     inputs,
                     model,
                     tokenizer,
@@ -131,7 +132,6 @@ def get_model_answers(
                     output_ids,
                     spaces_between_special_tokens=False,
                 )
-                # conv.stop_str = "</s>"
                 if conv.stop_str and output.find(conv.stop_str) > 0:
                     output = output[: output.find(conv.stop_str)]
                 for special_token in tokenizer.special_tokens_map.values():
@@ -149,7 +149,7 @@ def get_model_answers(
                 output = "ERROR"
 
             turns.append(output)
-            idxs.append(int(idx))
+            steps.append(int(step))
             new_tokens.append(int(new_token))
             wall_time.append(total_time)
             conv.messages[-1][-1] = output
@@ -164,20 +164,21 @@ def get_model_answers(
             torch.manual_seed(i)
             conv = get_conversation_template("vicuna")
             turns = []
-            idxs = []
+            steps = []
             new_tokens = []
             wall_time = []
             for j in range(len(question["turns"])):
                 qs = question["turns"][j]
                 conv.append_message(conv.roles[0], qs)
                 conv.append_message(conv.roles[1], None)
+                conv.stop_str = "</s>"
                 prompt = conv.get_prompt()
                 inputs = tokenizer([prompt], return_tensors="pt").to("cuda")
                 input_ids = inputs.input_ids
                 try:
                     torch.cuda.synchronize()
                     start_time = time.time()
-                    output_ids, new_token, idx, accept_length_tree = forward_func(
+                    output_ids, new_token, step, accept_length_tree = forward_func(
                         inputs,
                         model,
                         tokenizer,
@@ -219,13 +220,13 @@ def get_model_answers(
                     output = "ERROR"
 
                 turns.append(output)
-                idxs.append(int(idx))
+                steps.append(int(step))
                 new_tokens.append(int(new_token))
                 wall_time.append(total_time)
                 cur_accept_lengths_tree.extend(accept_length_tree)
                 conv.messages[-1][-1] = output
             # torch.cuda.empty_cache()
-            choices.append({"index": i, "turns": turns, "idxs": idxs, "new_tokens": new_tokens, "wall_time": wall_time,
+            choices.append({"index": i, "turns": turns, "decoding_steps": steps, "new_tokens": new_tokens, "wall_time": wall_time,
                             "accept_lengths": cur_accept_lengths_tree})
 
         # Dump answers
