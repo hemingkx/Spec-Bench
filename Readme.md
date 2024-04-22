@@ -8,7 +8,7 @@
 
 
 
-![timeline](./assets/spec_bench_7B.png)
+![timeline](./assets/7B.png)
 
 <div align="center">
 <font color="gray">Speedup comparison of Speculative Decoding methods on Spec-Bench, evaluated by Vicuna-7B-v1.3.</font>
