@@ -1,6 +1,6 @@
 # Leaderboard
 
-We present the evaluation results on our own devices for reference. All models were evaluated uniformly on Spec-Bench using **the same device and the testing environment**. We report the mean speedup over 3 different runs.
+We present the evaluation results on our own devices for reference. All models were evaluated uniformly on Spec-Bench using **the same device and the testing environment**. We report the mean speedup over 3 different runs and #mean accepted tokens per decoding step (which is `1.00` for vanilla autoregressive decoding).
 
 > ❗️It is important to note that model speedup rates may differ across various devices. For more precise speedup metrics, we recommend conducting evaluations of specific models on your intended devices.
 
