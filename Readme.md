@@ -1,9 +1,10 @@
 <div align="center">
-  <h2><img src="assets/logo.png" height="28px"/><i>Spec-Bench:</i>A Comprehensive Benchmark and Unified<br>Evaluation Platform for Speculative Decoding</h2> 
+  <h2><img src="assets/logo.png" height="28px"/><i>Spec-Bench:</i> A Comprehensive Benchmark and Unified<br>Evaluation Platform for Speculative Decoding</h2> 
 </div>
 <p align="center">
 | <a href="https://arxiv.org/abs/2401.07851"><b>Paper</b></a> | <a href="https://sites.google.com/view/spec-bench/"><b>Blog</b></a> | <a href="https://github.com/hemingkx/Spec-Bench/blob/main/Leaderboard.md"><b>Leaderboard</b></a> | <a href="ROADMAP.md"><b>Roadmap</b></a> |
 </p>
+
 
 
 
