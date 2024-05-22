@@ -3,8 +3,11 @@
 ## Comparative Analysis
 - [x] Integrated [Hydra](https://github.com/zankner/hydra)
 - [x] #Mean accepted tokens
-- [ ] Token acceptance
+- [ ] Token acceptance rate
 - [ ] Integrated more leading methods
+  - [ ] [SPACE](https://github.com/cteant/SPACE)
+  - [ ] [Kangaroo](https://github.com/Equationliu/Kangaroo)
+
 - [ ] Batched inference
 
 ## Integration
