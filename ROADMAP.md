@@ -5,7 +5,7 @@
 - [x] #Mean accepted tokens
 - [ ] Token acceptance rate
 - [ ] Integrated more leading methods
-  - [ ] [SPACE](https://github.com/cteant/SPACE)
+  - [x] [SPACE](https://github.com/cteant/SPACE)
   - [ ] [Kangaroo](https://github.com/Equationliu/Kangaroo)
 
 - [ ] Batched inference
