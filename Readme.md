@@ -28,8 +28,11 @@ Currently, Spec-Bench supports the evaluation of the following open source model
 - [Prompt Lookup Decoding](https://github.com/apoorvumang/prompt-lookup-decoding)
 - [REST](https://sites.google.com/view/rest-llm/)
 - [Lookahead Decoding](https://lmsys.org/blog/2023-11-21-lookahead-decoding/)
+- [SPACE](https://github.com/cteant/SPACE)
 
 ## Update
+
+**2024.5.29**: We have integrated [SPACE](https://github.com/cteant/SPACE) into Spec-Bench.
 
 **2024.5.16**: Our [paper](https://arxiv.org/abs/2401.07851) has been accepted by ACL 2024 Findings 🎉 !
 
@@ -55,6 +58,7 @@ Download corresponding model weights (if required) and modify the checkpoint pat
 - [Hydra](https://github.com/zankner/hydra?tab=readme-ov-file#model-weights)
 - [Medusa-1](https://github.com/FasterDecoding/Medusa?tab=readme-ov-file#medusa-1)
 - [Speculative Sampling](https://github.com/NJUNLP/MCSD?tab=readme-ov-file#model-release)
+- [SPACE](https://huggingface.co/AntMan/vicuna-v1.3-7b-space)
 
 ## Additonal Setup
 

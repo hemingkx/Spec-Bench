@@ -165,8 +165,6 @@ def space_forward(inputs, model, tokenizer, max_new_tokens, temperature=0.0, do_
             break
 
     new_token = input_ids[:, inputs['input_ids'].shape[-1]:]
-    responses = tokenizer.batch_decode(new_token, skip_special_tokens=True)
-    print(responses)
     assert sum(accept_length_list) == len(new_token[0])
     assert len(accept_length_list) == new_decode_step
     return input_ids, len(new_token[0]), new_decode_step, accept_length_list
