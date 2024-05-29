@@ -4,10 +4,8 @@
 - [x] Integrated [Hydra](https://github.com/zankner/hydra)
 - [x] #Mean accepted tokens
 - [ ] Token acceptance rate
-- [ ] Integrated more leading methods
+- [x] Integrated more leading methods
   - [x] [SPACE](https://github.com/cteant/SPACE)
-  - [ ] [Kangaroo](https://github.com/Equationliu/Kangaroo)
-
 - [ ] Batched inference
 
 ## Integration
