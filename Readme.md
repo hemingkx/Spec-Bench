@@ -21,6 +21,7 @@ Spec-Bench is a comprehensive benchmark designed for assessing Speculative Decod
 
 Currently, Spec-Bench supports the evaluation of the following open source models:
 
+- [EAGLE-2](https://github.com/SafeAILab/EAGLE)
 - [EAGLE](https://sites.google.com/view/eagle-llm)
 - [Hydra](https://github.com/zankner/hydra)
 - [Medusa](https://sites.google.com/view/medusa-llm)
@@ -32,13 +33,15 @@ Currently, Spec-Bench supports the evaluation of the following open source model
 
 ## Update
 
-**2024.5.29**: We have integrated [SPACE](https://github.com/cteant/SPACE) into Spec-Bench.
+**2024.10.25**: We have integrated [EAGLE-2](https://github.com/SafeAILab/EAGLE) into Spec-Bench.
 
-**2024.5.16**: Our [paper](https://arxiv.org/abs/2401.07851) has been accepted by ACL 2024 Findings 🎉 !
+**2024.05.29**: We have integrated [SPACE](https://github.com/cteant/SPACE) into Spec-Bench.
 
-**2024.3.12**: We now support statistics for [#Mean accepted tokens](https://github.com/hemingkx/Spec-Bench/blob/main/evaluation/speed.py#L65).
+**2024.05.16**: Our [paper](https://arxiv.org/abs/2401.07851) has been accepted by ACL 2024 Findings 🎉 !
 
-**2024.3.11**: We have integrated [Hydra](https://github.com/zankner/hydra) into Spec-Bench, check it out!
+**2024.03.12**: We now support statistics for [#Mean accepted tokens](https://github.com/hemingkx/Spec-Bench/blob/main/evaluation/speed.py#L65).
+
+**2024.03.11**: We have integrated [Hydra](https://github.com/zankner/hydra) into Spec-Bench, check it out!
 
 ## Installation
 
