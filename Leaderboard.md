@@ -14,7 +14,7 @@ We present the evaluation results on our own devices for reference. All models w
 
 | Models                                                       | Multi-turn Conversation | Translation | Summa-rization | Question Answering | Mathematical Reasoning | Retrieval-aug. Generation | #Mean Accepted Tokens |  Overall  |
 | ------------------------------------------------------------ | :---------------------: | :---------: | :------------: | :----------------: | :--------------------: | :-----------------------: | :-------------------: | :-------: |
-| [EAGLE-2](https://github.com/SafeAILab/EAGLE)🏅               |        **2.71x**        |  **1.82x**  |     2.19x      |     **2.11x**      |       **2.71x**        |         **1.91x**         |       **4.36**        | **2.25x** |
+| [EAGLE2](https://github.com/SafeAILab/EAGLE)🏅                |        **2.71x**        |  **1.82x**  |     2.19x      |     **2.11x**      |       **2.71x**        |         **1.91x**         |       **4.36**        | **2.25x** |
 | [EAGLE](https://huggingface.co/blog/assisted-generation)🥈    |          2.44x          |    1.81x    |     2.13x      |       2.11x        |         2.54x          |           1.82x           |         3.57          |   2.16x   |
 | [SpS](https://huggingface.co/blog/assisted-generation)🥉      |          1.98x          |    1.37x    |     2.00x      |       1.95x        |         1.89x          |           1.76x           |         2.29          |   1.83x   |
 | [Hydra](https://github.com/zankner/hydra)                    |          2.04x          |    1.67x    |     1.56x      |       1.81x        |         2.16x          |           1.48x           |         3.26          |   1.80x   |
