@@ -20,6 +20,7 @@ We present the evaluation results on our own devices for reference. All models w
 | [Hydra](https://github.com/zankner/hydra)                    |          2.04x          |    1.67x    |     1.56x      |       1.81x        |         2.16x          |           1.48x           |         3.26          |   1.80x   |
 | [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.57x          |    1.07x    |   **2.31x**    |       1.25x        |         1.62x          |           1.56x           |         1.74          |   1.55x   |
 | [Medusa](https://sites.google.com/view/medusa-llm)           |          1.60x          |    1.38x    |     1.28x      |       1.46x        |         1.64x          |           1.22x           |         2.32          |   1.44x   |
+| [Recycling](https://github.com/Luowaterbi/TokenRecycling)    |          1.49x          |    1.33x    |     1.42x      |       1.29x        |         1.58x          |           1.30x           |         2.70          |   1.41x   |
 | [REST](https://sites.google.com/view/rest-llm)               |          1.49x          |    1.18x    |     1.21x      |       1.46x        |         1.35x          |           1.27x           |         1.63          |   1.32x   |
 | [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.13x          |    0.97x    |     1.05x      |       1.07x        |         1.29x          |           0.98x           |         1.65          |   1.08x   |
 

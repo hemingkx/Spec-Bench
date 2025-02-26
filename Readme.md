@@ -27,6 +27,7 @@ Currently, Spec-Bench supports the evaluation of the following open source model
 - [Medusa](https://sites.google.com/view/medusa-llm)
 - [Speculative Sampling](https://huggingface.co/blog/assisted-generation)
 - [Prompt Lookup Decoding](https://github.com/apoorvumang/prompt-lookup-decoding)
+- [TokenRecycling](https://github.com/Luowaterbi/TokenRecycling)
 - [REST](https://sites.google.com/view/rest-llm/)
 - [Lookahead Decoding](https://lmsys.org/blog/2023-11-21-lookahead-decoding/)
 - [SPACE](https://github.com/cteant/SPACE)
