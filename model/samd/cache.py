@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 from transformers import PretrainedConfig, LlamaForCausalLM
-from transformers.cache_utils import DynamicCache, StaticCache, Cache
+from transformers.cache_utils import DynamicCache, Cache
 from typing import Optional, Dict, Any, Tuple, List
 
 class SamdCache(DynamicCache):
@@ -93,6 +93,9 @@ class SamdStaticCache(Cache):
         self.cache_length = self.last_length
     
     def get_seq_length(self, layer_idx = 0):
+        return self.cache_length
+
+    def get_usable_length(self, new_seq_length: int, layer_idx: Optional[int] = 0) -> int:
         return self.cache_length
 
     def get_max_cache_shape(self) -> Optional[int]:
