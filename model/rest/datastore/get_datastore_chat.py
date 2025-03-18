@@ -41,7 +41,7 @@ if args.large_datastore:
             writer.add_entry(token_list)
 else:
 
-    dataset_path = 'datastore/dataset/ShareGPT_Vicuna_unfiltered/ShareGPT_V4.3_unfiltered_cleaned_split.json'
+    dataset_path = 'dataset/ShareGPT_Vicuna_unfiltered/ShareGPT_V4.3_unfiltered_cleaned_split.json'
     assert dataset_path is not None, "please download the dataset from https://huggingface.co/datasets/Aeala/ShareGPT_Vicuna_unfiltered"
     dataset = json.load(open(dataset_path))
     total_length = len(dataset)
