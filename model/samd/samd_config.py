@@ -49,7 +49,7 @@ class ForwardType(str, Enum):
 
 class ForwardState:
 
-    def __init__(self, forward_type: ForwardType | None) -> None:
+    def __init__(self, forward_type: Optional[ForwardType]) -> None:
         self.forward_type = forward_type
 
 

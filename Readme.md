@@ -31,8 +31,11 @@ Currently, Spec-Bench supports the evaluation of the following open source model
 - [REST](https://sites.google.com/view/rest-llm/)
 - [Lookahead Decoding](https://lmsys.org/blog/2023-11-21-lookahead-decoding/)
 - [SPACE](https://github.com/cteant/SPACE)
+- [SAM-Decoding](https://github.com/hyx1999/SAM-Decoding)
 
 ## Update
+
+**2025.03.18**: We have integrated [SAM-Decoding](https://github.com/hyx1999/SAM-Decoding) into Spec-Bench.
 
 **2024.10.25**: We have integrated [EAGLE-2](https://github.com/SafeAILab/EAGLE) into Spec-Bench.
 
@@ -47,7 +50,7 @@ Currently, Spec-Bench supports the evaluation of the following open source model
 ## Installation
 
 ```
-conda create -n specbench python=3.9
+conda create -n specbench python=3.12
 conda activate specbench
 cd Spec-Bench
 pip install -r requirements.txt

@@ -6,7 +6,7 @@ from typing import Optional, Dict, Any, Tuple, List
 
 class SamdCache(DynamicCache):
     
-    def __init__(self, num_hidden_layers: int | None = None) -> None:
+    def __init__(self, num_hidden_layers: Optional[int] = None) -> None:
         super().__init__(num_hidden_layers)
         self.cache_length = 0
     
@@ -15,7 +15,7 @@ class SamdCache(DynamicCache):
     
     # @profile_decorator("SamdCache.select_indices")
     def select_indices(self,
-        indices: torch.Tensor | None = None,
+        indices: Optional[torch.Tensor] = None,
         accept_length: int = 1,
     ):
         start = self.cache_length
@@ -118,7 +118,7 @@ class SamdStaticCache(Cache):
     
     # @profile_decorator("SamdCache.select_indices")
     def select_indices(self,
-        indices: torch.Tensor | None = None,
+        indices: Optional[torch.Tensor] = None,
         accept_length: int = 1,
     ):
         start = self.cache_length
