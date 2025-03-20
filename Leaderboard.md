@@ -14,7 +14,7 @@ We present the evaluation results on our own devices for reference. All models w
 
 | Models                                                       | Multi-turn Conversation | Translation | Summa-rization | Question Answering | Mathematical Reasoning | Retrieval-aug. Generation | #Mean Accepted Tokens |  Overall  |
 | ------------------------------------------------------------ | :---------------------: | :---------: | :------------: | :----------------: | :--------------------: | :-----------------------: | :-------------------: | :-------: |
-| [SAM-D](https://github.com/hyx1999/SAM-Decoding)🏅 |        **2.85x**        |  **1.83x**  |   **2.64x**    |     **2.15x**      |         2.63x          |         **2.10x**         |       **4.61**        | **2.38x** |
+| [SAMD[EAGLE2]](https://github.com/hyx1999/SAM-Decoding)🏅 |        **2.85x**        |  **1.83x**  |   **2.64x**    |     **2.15x**      |         2.63x          |         **2.10x**         |       **4.61**        | **2.38x** |
 | [EAGLE2](https://github.com/SafeAILab/EAGLE)🥈                |          2.56x          |    1.78x    |     2.09x      |       2.07x        |       **2.66x**        |           1.86x           |         4.35          |   2.19x   |
 | [EAGLE](https://huggingface.co/blog/assisted-generation)🥉    |          2.31x          |    1.72x    |     2.00x      |       1.91x        |         2.38x          |           1.75x           |         3.57          |   2.03x   |
 | [Hydra](https://github.com/zankner/hydra)                    |          2.18x          |    1.79x    |     1.66x      |       1.85x        |         2.28x          |           1.62x           |         3.26          |   1.91x   |
