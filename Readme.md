@@ -76,8 +76,8 @@ Download corresponding model weights (if required) and modify the checkpoint pat
 ```
 cd model/rest/DraftRetriever
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-maturin build --release --strip -i python3.9 # will produce a .whl file
-pip3 install ./target/wheels/draftretriever-0.1.0-cp39-cp39-linux_x86_64.whl
+maturin build --release --strip -i python3.12 # will produce a .whl file
+pip3 install ./target/wheels/draftretriever-0.1.0-cp312-cp312-linux_x86_64.whl
 ```
 
 ##### Create a datastore
