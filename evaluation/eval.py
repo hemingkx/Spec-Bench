@@ -90,7 +90,7 @@ def get_model_answers(
     question = questions[0]
 
     model_path = model.config._name_or_path # get model path from model
-    """
+
     # warmup
     for _ in range(3):
         torch.manual_seed(0)
@@ -157,7 +157,7 @@ def get_model_answers(
             wall_time.append(total_time)
             conv.messages[-1][-1] = output
     print('Warmup done')
-    """
+
     accept_lengths_tree = []
     for question in tqdm(questions):
 
