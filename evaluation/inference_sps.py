@@ -10,7 +10,7 @@ from evaluation.eval import run_eval, reorg_answer_file
 from fastchat.utils import str_to_torch_dtype
 
 from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationMixin
-from model.sps.decoding import assisted_decoding
+from model.sps.decoding import _assisted_decoding
 
 
 def sps_forward(inputs, model, tokenizer, max_new_tokens, do_sample=False, temperature=0.0, drafter=None):
@@ -88,7 +88,7 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    GenerationMixin.assisted_decoding = assisted_decoding
+    GenerationMixin._assisted_decoding = _assisted_decoding
 
     question_file = f"data/{args.bench_name}/question.jsonl"
     if args.answer_file:

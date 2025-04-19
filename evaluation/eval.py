@@ -89,10 +89,13 @@ def get_model_answers(
 
     question = questions[0]
 
+    model_path = model.config._name_or_path # get model path from model
+    """
     # warmup
     for _ in range(3):
         torch.manual_seed(0)
-        conv = get_conversation_template("vicuna")
+        conv = get_conversation_template(model_path) 
+        conv.messages = [] # some of the templates have some messages already which makes it inconsistent. So initiating it with empty list.
         turns = []
         steps = []
         new_tokens = []
@@ -101,7 +104,7 @@ def get_model_answers(
             qs = question["turns"][j]
             conv.append_message(conv.roles[0], qs)
             conv.append_message(conv.roles[1], None)
-            conv.stop_str = "</s>"
+            # conv.stop_str = "</s>" # stop_str is different for differnt models
             prompt = conv.get_prompt()
             inputs = tokenizer([prompt], return_tensors="pt").to("cuda")
             input_ids = inputs.input_ids
@@ -154,7 +157,7 @@ def get_model_answers(
             wall_time.append(total_time)
             conv.messages[-1][-1] = output
     print('Warmup done')
-
+    """
     accept_lengths_tree = []
     for question in tqdm(questions):
 
@@ -162,7 +165,8 @@ def get_model_answers(
         for i in range(num_choices):
             cur_accept_lengths_tree = []
             torch.manual_seed(i)
-            conv = get_conversation_template("vicuna")
+            conv = get_conversation_template(model_path)
+            conv.messages = [] # some of the templates have some messages already which makes it inconsistent. So initiating it with empty list.
             turns = []
             steps = []
             new_tokens = []
@@ -171,7 +175,7 @@ def get_model_answers(
                 qs = question["turns"][j]
                 conv.append_message(conv.roles[0], qs)
                 conv.append_message(conv.roles[1], None)
-                conv.stop_str = "</s>"
+                # conv.stop_str = "</s>" # stop_str is different for differnt models
                 prompt = conv.get_prompt()
                 inputs = tokenizer([prompt], return_tensors="pt").to("cuda")
                 input_ids = inputs.input_ids
