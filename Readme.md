@@ -32,6 +32,8 @@ Currently, Spec-Bench supports the evaluation of the following open source model
 - [SPACE](https://github.com/cteant/SPACE)
 - [SAM-Decoding](https://github.com/hyx1999/SAM-Decoding)
 
+Alongside the stable version, Spec-Bench now supports the latest transformers with multiple speculative decoding methods, including the SpS and Eagle series. For details, check out the [latest-transformer](https://github.com/hemingkx/Spec-Bench/tree/latest-transformer) branch.
+
 ## Update
 
 **2025.03.23**: We have integrated [EAGLE-3](https://github.com/SafeAILab/EAGLE) into Spec-Bench.
