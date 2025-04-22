@@ -36,6 +36,8 @@ Alongside the stable version, Spec-Bench now supports the latest transformers wi
 
 ## Update
 
+**2025.04.22**: We have updated [Leaderboard](https://github.com/hemingkx/Spec-Bench/blob/main/Leaderboard.md) in Spec-Bench.
+
 **2025.03.23**: We have integrated [EAGLE-3](https://github.com/SafeAILab/EAGLE) into Spec-Bench.
 
 **2025.03.18**: We have integrated [SAM-Decoding](https://github.com/hyx1999/SAM-Decoding) into Spec-Bench.
@@ -97,6 +99,8 @@ Select specific command line in `eval.sh`, the results will be stored in `data/s
 ```
 ./eval.sh
 ```
+
+> We also provide an automatic evaluation script in `./scripts` for your reference.
 
 ## Speedup Report
 

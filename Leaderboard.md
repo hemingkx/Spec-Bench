@@ -4,7 +4,7 @@ We present the evaluation results on our own devices for reference. All models w
 
 > ❗️It is important to note that model speedup rates may differ across various devices. For more precise speedup metrics, we recommend conducting evaluations of specific models on your intended devices.
 
-> 🤔 This is a gentle reminder that while speedup is the primary metric for assessing Speculative Decoding methods, other benefits are worth considering. For example, [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) and [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) require no extra parameters, making it simpler to integrate a wider range of models.
+> 🤔 This is a gentle reminder that while speedup is the primary metric for assessing Speculative Decoding methods, other benefits are worth considering. For example, [PLD](https://github.com/apoorvumang/prompt-lookup-decoding), [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/), and [Recycling](https://github.com/Luowaterbi/TokenRecycling) are plug-and-play methods that require minimal extra parameters, making them easier to integrate into a wider range of models.
 
 ## Leaderboard on 3090
 
@@ -27,43 +27,53 @@ We present the evaluation results on our own devices for reference. All models w
 
 ## Leaderboard on A100
 
-- Device: a single NVIDIA A100 GPU (80GB) with 64 CPU cores 
-- Testing environment: Pytorch 2.0.1, under CUDA 11.4
+- Device: a single NVIDIA A100 GPU (80GB) with 96 CPU cores
+- Testing environment: Pytorch 2.5.1, under CUDA 11.5
 - Experimental Settings: greedy decoding, FP16 precision, batch size = 1
 
 ### Vicuna-7B-v1.3
 
 | Models                                                       | Multi-turn Conversation | Translation | Summa-rization | Question Answering | Mathematical Reasoning | Retrieval-aug. Generation | #Mean Accepted Tokens |  Overall  |
 | ------------------------------------------------------------ | :---------------------: | :---------: | :------------: | :----------------: | :--------------------: | :-----------------------: | :-------------------: | :-------: |
-| [EAGLE](https://sites.google.com/view/eagle-llm)🏅            |        **2.67x**        |  **1.99x**  |     2.23x      |     **2.12x**      |       **2.67x**        |         **2.04x**         |       **3.61**        | **2.29x** |
-| [Hydra](https://github.com/zankner/hydra)🥈                   |          2.45x          |    1.94x    |     1.79x      |       2.03x        |         2.49x          |           1.77x           |         3.24          |   2.09x   |
-| [Medusa](https://sites.google.com/view/medusa-llm)🥉          |          2.05x          |    1.73x    |     1.57x      |       1.75x        |         2.05x          |           1.51x           |         2.32          |   1.78x   |
-| [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.64x          |    1.04x    |   **2.43x**    |       1.14x        |         1.61x          |           1.71x           |         1.73          |   1.59x   |
-| [SpS](https://huggingface.co/blog/assisted-generation)       |          1.66x          |    1.13x    |     1.62x      |       1.49x        |         1.47x          |           1.55x           |         2.28          |   1.49x   |
+| [SAMD[EAGLE2]](https://github.com/hyx1999/SAM-Decoding)🏅     |        **3.30x**        |    2.01x    |   **3.19x**    |     **2.36x**      |       **2.96x**        |         **2.52x**         |       **4.58**        | **2.73x** |
+| [EAGLE2](https://sites.google.com/view/eagle-llm)🥈           |          2.84x          |    1.88x    |     2.34x      |       2.15x        |         2.79x          |           2.13x           |         4.34          |   2.36x   |
+| [Recycling](https://github.com/Luowaterbi/TokenRecycling)🥉   |          2.37x          |  **2.02x**  |     2.27x      |       2.08x        |         2.53x          |           2.02x           |         2.73          |   2.22x   |
+| [EAGLE](https://sites.google.com/view/eagle-llm)             |          2.45x          |    1.77x    |     2.08x      |       1.93x        |         2.44x          |           1.87x           |         3.58          |   2.10x   |
+| [Hydra](https://github.com/zankner/hydra)                    |          2.43x          |    1.89x    |     1.83x      |       1.97x        |         2.45x          |           1.80x           |         3.26          |   2.07x   |
+| [Medusa](https://sites.google.com/view/medusa-llm)           |          1.97x          |    1.65x    |     1.57x      |       1.65x        |         1.94x          |           1.49x           |         2.31          |   1.71x   |
+| [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.60x          |    1.06x    |     2.66x      |       1.19x        |         1.62x          |           1.86x           |         1.75          |   1.66x   |
+| [SpS](https://huggingface.co/blog/assisted-generation)       |          1.66x          |    1.13x    |     1.71x      |       1.50x        |         1.47x          |           1.66x           |         2.28          |   1.52x   |
 | [REST](https://sites.google.com/view/rest-llm)               |          1.63x          |    1.31x    |     1.36x      |       1.66x        |         1.21x          |           1.73x           |         1.82          |   1.48x   |
-| [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.40x          |    1.14x    |     1.19x      |       1.24x        |         1.55x          |           1.09x           |         1.66          |   1.27x   |
+| [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.47x          |    1.14x    |     1.36x      |       1.25x        |         1.57x          |           1.22x           |         1.64          |   1.34x   |
 
 ### Vicuna-13B-v1.3
 
 | Models                                                       | Multi-turn Conversation | Translation | Summa-rization | Question Answering | Mathematical Reasoning | Retrieval-aug. Generation | #Mean Accepted Tokens |  Overall  |
 | ------------------------------------------------------------ | :---------------------: | :---------: | :------------: | :----------------: | :--------------------: | :-----------------------: | :-------------------: | :-------: |
-| [EAGLE](https://sites.google.com/view/eagle-llm)🏅            |        **2.68x**        |  **1.96x**  |   **2.44x**    |     **2.04x**      |       **2.70x**        |         **2.23x**         |       **3.64**        | **2.34x** |
-| [Hydra](https://github.com/zankner/hydra)🥈                   |          2.46x          |    1.90x    |     1.93x      |       1.96x        |         2.48x          |           1.92x           |         3.35          |   2.12x   |
-| [Medusa](https://sites.google.com/view/medusa-llm)🥉          |          1.96x          |    1.66x    |     1.63x      |       1.63x        |         2.00x          |           1.58x           |         2.39          |   1.75x   |
-| [SpS](https://huggingface.co/blog/assisted-generation)       |          1.60x          |    1.13x    |     1.68x      |       1.39x        |         1.53x          |           1.67x           |         2.18          |   1.49x   |
-| [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.47x          |    1.02x    |     2.19x      |       1.03x        |         1.57x          |           1.71x           |         1.68          |   1.48x   |
+| [EAGLE3](https://sites.google.com/view/eagle-llm)🏅           |        **3.48x**        |  **2.36x**  |   **3.14x**    |     **2.94x**      |       **3.42x**        |         **2.78x**         |       **5.71**        | **3.02x** |
+| [SAMD[EAGLE2]](https://github.com/hyx1999/SAM-Decoding)🥈     |          3.38x          |    2.11x    |     2.96x      |       2.35x        |         3.16x          |           2.67x           |         4.52          |   2.77x   |
+| [EAGLE2](https://sites.google.com/view/eagle-llm)🥉           |          2.95x          |    1.96x    |     2.43x      |       2.20x        |         2.95x          |           2.25x           |         4.43          |   2.46x   |
+| [Hydra](https://github.com/zankner/hydra)                    |          2.58x          |    1.99x    |     1.94x      |       2.08x        |         2.62x          |           1.95x           |         3.35          |   2.20x   |
+| [Recycling](https://github.com/Luowaterbi/TokenRecycling)    |          2.30x          |    2.02x    |     2.10x      |       2.05x        |         2.60x          |           1.94x           |         2.73          |   2.17x   |
+| [EAGLE](https://sites.google.com/view/eagle-llm)             |          2.52x          |    1.84x    |     2.12x      |       1.91x        |         2.52x          |           2.01x           |         3.64          |   2.16x   |
+| [Medusa](https://sites.google.com/view/medusa-llm)           |          2.05x          |    1.71x    |     1.62x      |       1.69x        |         2.08x          |           1.61x           |         2.39          |   1.80x   |
+| [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.54x          |    1.03x    |     2.30x      |       1.05x        |         1.65x          |           1.82x           |         1.67          |   1.56x   |
+| [SpS](https://huggingface.co/blog/assisted-generation)       |          1.67x          |    1.15x    |     1.71x      |       1.43x        |         1.58x          |           1.70x           |         2.19          |   1.54x   |
 | [REST](https://sites.google.com/view/rest-llm)               |          1.52x          |    1.17x    |     1.37x      |       1.53x        |         1.19x          |           1.55x           |         1.82          |   1.38x   |
-| [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.30x          |    1.06x    |     1.20x      |       1.12x        |         1.48x          |           1.12x           |         1.63          |   1.22x   |
+| [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.43x          |    1.09x    |     1.28x      |       1.18x        |         1.59x          |           1.21x           |         1.63          |   1.30x   |
 
 ### Vicuna-33B-v1.3
 
 | Models                                                       | Multi-turn Conversation | Translation | Summa-rization | Question Answering | Mathematical Reasoning | Retrieval-aug. Generation | #Mean Accepted Tokens |  Overall  |
 | ------------------------------------------------------------ | :---------------------: | :---------: | :------------: | :----------------: | :--------------------: | :-----------------------: | :-------------------: | :-------: |
-| [EAGLE](https://sites.google.com/view/eagle-llm)🏅            |        **2.79x**        |  **2.05x**  |   **2.51x**    |     **2.17x**      |       **2.99x**        |         **2.27x**         |       **3.39**        | **2.47x** |
-| [Hydra](https://github.com/zankner/hydra)🥈                   |          2.59x          |    2.01x    |     2.04x      |       2.11x        |         2.71x          |           2.06x           |         3.24          |   2.26x   |
-| [Medusa](https://sites.google.com/view/medusa-llm)🥉          |          1.98x          |    1.73x    |     1.64x      |       1.66x        |         2.07x          |           1.62x           |         2.33          |   1.79x   |
-| [SpS](https://huggingface.co/blog/assisted-generation)       |          1.75x          |    1.28x    |     1.76x      |       1.53x        |         1.69x          |           1.68x           |         2.01          |   1.61x   |
+| [EAGLE2](https://sites.google.com/view/eagle-llm)🏅           |          3.01x          |  **2.10x**  |     2.51x      |     **2.27x**      |       **3.30x**        |           2.29x           |         4.05          | **2.59x** |
+| [SAMD[EAGLE2]](https://github.com/hyx1999/SAM-Decoding)🥈     |        **3.10x**        |    2.07x    |   **2.69x**    |       2.21x        |         3.13x          |         **2.33x**         |       **4.07**        |   2.59x   |
+| [EAGLE](https://sites.google.com/view/eagle-llm)🥉            |          2.75x          |    2.04x    |     2.42x      |       2.16x        |         2.97x          |           2.20x           |         3.39          |   2.43x   |
+| [Hydra](https://github.com/zankner/hydra)                    |          2.53x          |    2.01x    |     1.96x      |       2.10x        |         2.68x          |           1.98x           |         3.24          |   2.22x   |
+| [Recycling](https://github.com/Luowaterbi/TokenRecycling)    |          1.88x          |    1.67x    |     1.84x      |       1.71x        |         2.15x          |           1.69x           |         2.62          |   1.83x   |
+| [Medusa](https://sites.google.com/view/medusa-llm)           |          1.94x          |    1.72x    |     1.58x      |       1.65x        |         2.05x          |           1.56x           |         2.33          |   1.76x   |
+| [SpS](https://huggingface.co/blog/assisted-generation)       |          1.70x          |    1.27x    |     1.71x      |       1.52x        |         1.66x          |           1.60x           |         2.01          |   1.57x   |
 | [REST](https://sites.google.com/view/rest-llm)               |          1.63x          |    1.27x    |     1.45x      |       1.61x        |         1.30x          |           1.61x           |         1.80          |   1.48x   |
-| [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.44x          |    1.06x    |     2.00x      |       1.07x        |         1.55x          |           1.45x           |         1.55          |   1.42x   |
-| [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.32x          |    1.08x    |     1.20x      |       1.16x        |         1.54x          |           1.15x           |         1.61          |   1.24x   |
+| [PLD](https://github.com/apoorvumang/prompt-lookup-decoding) |          1.42x          |    1.06x    |     1.93x      |       1.07x        |         1.54x          |           1.42x           |         1.54          |   1.40x   |
+| [Lookahead](https://lmsys.org/blog/2023-11-21-lookahead-decoding/) |          1.32x          |    1.10x    |     1.20x      |       1.17x        |         1.56x          |           1.15x           |         1.61          |   1.25x   |
 
